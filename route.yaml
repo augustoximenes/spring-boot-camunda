@@ -1,12 +1,12 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: financeira-credito
-  namespace: financeira
+  name: spring-boot-camunda-bpm
+  namespace: spring-boot-camunda-bpm
 spec:
   path: /
   to:
     kind: Service
-    name: financeira-credito
+    name: spring-boot-camunda-bpm
   port:
     targetPort: 8080

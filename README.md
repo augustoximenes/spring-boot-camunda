@@ -18,7 +18,7 @@ ARG DEPENDENCY=target/dependency
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/lib /app/lib
 COPY --from=builder ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
-ENTRYPOINT ["java","-cp","app:app/lib/*","br.com.financeira.Application"] 
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.example.workflow.Application"] 
 ```
 
 ## Build image
