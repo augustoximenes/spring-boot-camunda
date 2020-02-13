@@ -1,0 +1,12 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: financeira-credito
+  namespace: financeira
+spec:
+  path: /
+  to:
+    kind: Service
+    name: financeira-credito
+  port:
+    targetPort: 8080
