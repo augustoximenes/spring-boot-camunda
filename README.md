@@ -21,12 +21,12 @@ COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
 ENTRYPOINT ["java","-cp","app:app/lib/*","br.com.financeira.Application"] 
 ```
 
-## Build imagem
+## Build image
 ```
 $ docker build . -t camunda/my-project
 ```
 
-## Run imagem
+## Run image
 ```
 $ docker run -p 8080:8080 camunda/my-project
 ```
