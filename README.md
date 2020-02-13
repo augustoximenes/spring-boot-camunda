@@ -23,10 +23,10 @@ ENTRYPOINT ["java","-cp","app:app/lib/*","br.com.financeira.Application"]
 
 ## Build image
 ```
-$ docker build . -t camunda/my-project
+$ docker build . -t spring-boot-camunda-bpm/my-project
 ```
 
 ## Run image
 ```
-$ docker run -p 8080:8080 camunda/my-project
+$ docker run -p 8080:8080 spring-boot-camunda-bpm/my-project
 ```
