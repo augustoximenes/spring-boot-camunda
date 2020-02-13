@@ -5,7 +5,7 @@ metadata:
   namespace: spring-boot-camunda-bpm
 spec:
   selector:
-    app: spring-boot-camunda-bpm-app
+    app: my-project-app
   ports:
     - protocol: TCP
       port: 80

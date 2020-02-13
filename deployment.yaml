@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: spring-boot-camunda-bpm
   labels:
-    app: spring-boot-camunda-bpm-app
+    app: my-project-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spring-boot-camunda-bpm-app
+      app: my-project-app
   template:
     metadata:
       labels:
-        app: spring-boot-camunda-bpm-app
+        app: my-project-app
     spec:
       containers:
         - name: spring-boot-camunda-bpm
@@ -20,4 +20,4 @@ spec:
           ports:
             - containerPort: 8080
       imagePullSecrets:
-        - name: github-spring-boot-camunda-bpm-app
+        - name: github-spring-boot-camunda-bpm
