@@ -2,7 +2,7 @@
 Sample project which illustrates how to setup a Spring Boot project whit Camunda BPM.
 
 ## Create the project
-https://start.camunda.com
+https://start.camunda.com - the default project was created in the src directory.
 
 ## Create Dockerfile
 ```
