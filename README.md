@@ -32,8 +32,8 @@ $ docker run -p 8080:8080 spring-boot-camunda-bpm/my-project
 ```
 
 ## Openshift
-If you want to use a private docker repository, an Image Pull Secret must be created similar to the image below:
+If you want to use a private image registry, an Image Pull Secret must be created similar to the image below:
 
-![Image description](docs/images/Openshift%20-%20Image%20Pull%20Secret.png)
+![Openshift](docs/images/Openshift%20-%20Image%20Pull%20Secret.png)
 
 For github, the password field is a personal access tokens!
