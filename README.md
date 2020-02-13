@@ -31,7 +31,7 @@ $ docker build . -t spring-boot-camunda-bpm/my-project
 $ docker run -p 8080:8080 spring-boot-camunda-bpm/my-project
 ```
 
-## Openshift
+## Kubernetes/Openshift
 If you want to use a private image registry, an Image Pull Secret must be created similar to the image below:
 
 ![Openshift](docs/images/Openshift%20-%20Image%20Pull%20Secret.png)
