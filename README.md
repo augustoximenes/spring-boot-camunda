@@ -1,10 +1,10 @@
-# Credito
-Módulo de Crédito
+# spring-boot-camunda-bpm
+Sample project which illustrates how to setup a Spring Boot project whit Camunda BPM.
 
-## Criação do projeto
+## Create the project
 https://start.camunda.com
 
-## Dockerfile
+## Create Dockerfile
 ```
 FROM openjdk:8-jdk-alpine AS builder
 WORKDIR target/dependency
@@ -21,12 +21,12 @@ COPY --from=builder ${DEPENDENCY}/BOOT-INF/classes /app
 ENTRYPOINT ["java","-cp","app:app/lib/*","br.com.financeira.Application"] 
 ```
 
-## Criar imagem
+## Build imagem
 ```
 $ docker build . -t camunda/my-project
 ```
 
-## Executar imagem
+## Run imagem
 ```
 $ docker run -p 8080:8080 camunda/my-project
 ```
