@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1e591o5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.0.0">
+  <bpmn:process id="order-process" name="Order Process" isExecutable="true">
+    <bpmn:startEvent id="order-placed" name="Order Placed">
+      <bpmn:outgoing>Flow_1wkxycc</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1wkxycc" sourceRef="order-placed" targetRef="send-to-quality-analysis" />
+    <bpmn:endEvent id="order-fullfilled" name="Order Fullfilled">
+      <bpmn:incoming>Flow_17419ii</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_17419ii" sourceRef="Event_1nc6y8q" targetRef="order-fullfilled" />
+    <bpmn:intermediateCatchEvent id="Event_1nc6y8q" name="Wait 30 seconds">
+      <bpmn:incoming>Flow_1nb2hcm</bpmn:incoming>
+      <bpmn:outgoing>Flow_17419ii</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_03j2q59">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT30S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:serviceTask id="send-to-quality-analysis" name="Send To Quality Analysis" camunda:delegateExpression="${sendToQualityAnalysisServiceTask}">
+      <bpmn:incoming>Flow_1wkxycc</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dyki78</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1dyki78" sourceRef="send-to-quality-analysis" targetRef="Gateway_0xlh71s" />
+    <bpmn:sequenceFlow id="Flow_19ak1r0" sourceRef="quality-analysis-received" targetRef="Gateway_1u8ajc7" />
+    <bpmn:intermediateCatchEvent id="quality-analysis-received" name="Quality Analysis Received">
+      <bpmn:incoming>Flow_0mmq3yj</bpmn:incoming>
+      <bpmn:outgoing>Flow_19ak1r0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0uhy1so" messageRef="Message_0n4qsiv" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:parallelGateway id="Gateway_0xlh71s">
+      <bpmn:incoming>Flow_1dyki78</bpmn:incoming>
+      <bpmn:outgoing>Flow_1deu48k</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0mmq3yj</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:sequenceFlow id="Flow_1deu48k" sourceRef="Gateway_0xlh71s" targetRef="make-risk-analysis" />
+    <bpmn:sequenceFlow id="Flow_0mmq3yj" sourceRef="Gateway_0xlh71s" targetRef="quality-analysis-received" />
+    <bpmn:sequenceFlow id="Flow_1nb2hcm" sourceRef="Gateway_1u8ajc7" targetRef="Event_1nc6y8q" />
+    <bpmn:sequenceFlow id="Flow_15ieyu3" sourceRef="make-risk-analysis" targetRef="Gateway_1u8ajc7" />
+    <bpmn:serviceTask id="make-risk-analysis" name="Make Risk Analysis" camunda:delegateExpression="${makeRiskAnalysis}">
+      <bpmn:incoming>Flow_1deu48k</bpmn:incoming>
+      <bpmn:outgoing>Flow_15ieyu3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:parallelGateway id="Gateway_1u8ajc7">
+      <bpmn:incoming>Flow_19ak1r0</bpmn:incoming>
+      <bpmn:incoming>Flow_15ieyu3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1nb2hcm</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:textAnnotation id="TextAnnotation_1afit19">
+      <bpmn:text>POST /orders</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_049q0rt" sourceRef="order-placed" targetRef="TextAnnotation_1afit19" />
+    <bpmn:textAnnotation id="TextAnnotation_00wxbl7">
+      <bpmn:text>POST /quality-analysis/callback/{businessKey}</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_14dcg9c" sourceRef="quality-analysis-received" targetRef="TextAnnotation_00wxbl7" />
+  </bpmn:process>
+  <bpmn:message id="Message_0n4qsiv" name="quality-analysis-received" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-process">
+      <bpmndi:BPMNShape id="TextAnnotation_00wxbl7_di" bpmnElement="TextAnnotation_00wxbl7">
+        <dc:Bounds x="490" y="79" width="260" height="32" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_17419ii_di" bpmnElement="Flow_17419ii">
+        <di:waypoint x="938" y="240" />
+        <di:waypoint x="1052" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1wkxycc_di" bpmnElement="Flow_1wkxycc">
+        <di:waypoint x="208" y="240" />
+        <di:waypoint x="270" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dyki78_di" bpmnElement="Flow_1dyki78">
+        <di:waypoint x="370" y="240" />
+        <di:waypoint x="445" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_19ak1r0_di" bpmnElement="Flow_19ak1r0">
+        <di:waypoint x="638" y="240" />
+        <di:waypoint x="755" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1deu48k_di" bpmnElement="Flow_1deu48k">
+        <di:waypoint x="470" y="265" />
+        <di:waypoint x="470" y="400" />
+        <di:waypoint x="570" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mmq3yj_di" bpmnElement="Flow_0mmq3yj">
+        <di:waypoint x="495" y="240" />
+        <di:waypoint x="602" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1nb2hcm_di" bpmnElement="Flow_1nb2hcm">
+        <di:waypoint x="805" y="240" />
+        <di:waypoint x="902" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_15ieyu3_di" bpmnElement="Flow_15ieyu3">
+        <di:waypoint x="670" y="400" />
+        <di:waypoint x="780" y="400" />
+        <di:waypoint x="780" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="order-placed">
+        <dc:Bounds x="172" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="158" y="265" width="65" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0gvmie8_di" bpmnElement="send-to-quality-analysis">
+        <dc:Bounds x="270" y="200" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1afit19_di" bpmnElement="TextAnnotation_1afit19">
+        <dc:Bounds x="140" y="80" width="100" height="30" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_086727k_di" bpmnElement="Gateway_0xlh71s">
+        <dc:Bounds x="445" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_19ozv62_di" bpmnElement="order-fullfilled">
+        <dc:Bounds x="1052" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1034" y="265" width="72" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1talsnq_di" bpmnElement="Event_1nc6y8q">
+        <dc:Bounds x="902" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="881" y="265" width="81" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1f88rz7_di" bpmnElement="quality-analysis-received">
+        <dc:Bounds x="602" y="222" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="581" y="265" width="79" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_05ue6tq_di" bpmnElement="make-risk-analysis">
+        <dc:Bounds x="570" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_17rag9y_di" bpmnElement="Gateway_1u8ajc7">
+        <dc:Bounds x="755" y="215" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_049q0rt_di" bpmnElement="Association_049q0rt">
+        <di:waypoint x="190" y="222" />
+        <di:waypoint x="190" y="110" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_14dcg9c_di" bpmnElement="Association_14dcg9c">
+        <di:waypoint x="620" y="222" />
+        <di:waypoint x="620" y="111" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
