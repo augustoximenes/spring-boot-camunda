@@ -1,15 +1,16 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/camunda
+    url: jdbc:mysql://db:3306/camunda
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: camunda
     password: camunda
   kafka:
-    producer:
-      bootstrap-servers: localhost:9092
     consumer:
-      group-id: group-id
+      bootstrap-servers: broker:9092
+      group-id: group_id
       auto-offset-reset: earliest
+    producer:
+      bootstrap-servers: broker:9092
 
 camunda:
   bpm:
