@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.20.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: db
+  name: db
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.20.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: db
+    spec:
+      containers:
+      - env:
+        - name: MYSQL_DATABASE
+          value: camunda
+        - name: MYSQL_PASSWORD
+          value: camunda
+        - name: MYSQL_ROOT_PASSWORD
+          value: "123456"
+        - name: MYSQL_USER
+          value: camunda
+        image: mysql:8.0.20
+        name: db
+        resources: {}
+      hostname: db
+      restartPolicy: Always
+status: {}
